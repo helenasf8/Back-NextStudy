@@ -6,7 +6,10 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
+from IPython.lib.editorhooks import mate
 from core import models
+from core.models.materia import Materia
+from setuptools._distutils.util import MACOSX_VERSION_VAR
 
 
 class UserAdmin(BaseUserAdmin):
@@ -52,3 +55,4 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(models.User, UserAdmin)
+admin.site.register(Materia)
