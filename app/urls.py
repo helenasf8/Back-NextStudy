@@ -13,10 +13,12 @@ from rest_framework_simplejwt.views import (
 )
 
 from core.views import UserRegistrationView, UserViewSet
+from core.views.materia import MateriaViewSet
 
 router = DefaultRouter()
 
 router.register(r'usuarios', UserViewSet, basename='usuarios')
+router.register(r'materia', MateriaViewSet, basename='materia')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
