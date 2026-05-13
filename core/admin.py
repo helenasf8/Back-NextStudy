@@ -9,7 +9,6 @@ from django.utils.translation import gettext_lazy as _
 from IPython.lib.editorhooks import mate
 from core import models
 from core.models.materia import Materia
-from setuptools._distutils.util import MACOSX_VERSION_VAR
 
 
 class UserAdmin(BaseUserAdmin):
