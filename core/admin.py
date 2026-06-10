@@ -8,7 +8,6 @@ from django.utils.translation import gettext_lazy as _
 
 from core import models
 from core.models.materia import Materia
-from setuptools._distutils.util import MACOSX_VERSION_VAR
 
 
 class UserAdmin(BaseUserAdmin):
@@ -18,7 +17,7 @@ class UserAdmin(BaseUserAdmin):
     list_display = ['email', 'name']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal Info'), {'fields': ('name',)}),
+        (_('Personal Info'), {'fields': ('name', 'foto')}),
         (
             _('Permissions'),
             {
@@ -44,6 +43,7 @@ class UserAdmin(BaseUserAdmin):
                     'password1',
                     'password2',
                     'name',
+                    'foto',
                     'is_active',
                     'is_staff',
                     'is_superuser',
