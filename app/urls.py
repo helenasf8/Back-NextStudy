@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import (
@@ -5,12 +7,6 @@ from drf_spectacular.views import (
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
-
-from django.conf import settings
-from django.conf.urls.static import static
-
-from uploader.router import router as uploader_router
-
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -18,13 +14,16 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from core.views import UserRegistrationView, UserViewSet
+from core.views import CronogramaItemViewSet, CronogramaViewSet, UserRegistrationView, UserViewSet
 from core.views.materia import MateriaViewSet
+from uploader.router import router as uploader_router
 
 router = DefaultRouter()
 
 router.register(r'usuarios', UserViewSet, basename='usuarios')
 router.register(r'materia', MateriaViewSet, basename='materia')
+router.register(r'cronograma', CronogramaViewSet, basename='cronograma')
+router.register(r'cronograma-item', CronogramaItemViewSet, basename='cronograma-item')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

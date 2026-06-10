@@ -7,6 +7,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from core import models
+from core.models import Cronograma, CronogramaItem
 from core.models.materia import Materia
 
 
@@ -55,3 +56,5 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(models.User, UserAdmin)
 admin.site.register(Materia)
+admin.site.register(Cronograma)
+admin.site.register(CronogramaItem)
