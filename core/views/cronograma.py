@@ -5,5 +5,15 @@ from core.serializers import CronogramaSerializer
 
 
 class CronogramaViewSet(ModelViewSet):
-    queryset = Cronograma.objects.all()
+
     serializer_class = CronogramaSerializer
+
+    def get_queryset(self):
+        return Cronograma.objects.filter(
+            usuario=self.request.user
+        )
+
+    def perform_create(self, serializer):
+        serializer.save(
+            usuario=self.request.user
+        )
