@@ -15,7 +15,6 @@ class RespostaExercicio(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        # verifica se acertou
         self.correta = self.alternativa_escolhida.correta
 
         self.pontos = 10 if self.correta else 0

@@ -14,21 +14,17 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from core.views import (
-    AlternativaViewSet,
-    ExercicioViewSet,
-    UserRegistrationView,
-    UserViewSet,
-)
+import core.views
 from core.views.materia import MateriaViewSet
 from uploader.router import router as uploader_router
 
 router = DefaultRouter()
 
-router.register(r'usuarios', UserViewSet, basename='usuarios')
+router.register(r'usuarios', core.views.UserViewSet, basename='usuarios')
 router.register(r'materia', MateriaViewSet, basename='materia')
-router.register(r'exercicios', ExercicioViewSet, basename='exercicios')
-router.register(r'alternativas', AlternativaViewSet, basename='alternativas')
+router.register(r'exercicios', core.views.ExercicioViewSet, basename='exercicios')
+router.register(r'alternativas', core.views.AlternativaViewSet, basename='alternativas')
+router.register(r'respostas', core.views.RespostaExercicioViewSet, basename='respostas')
 
 
 urlpatterns = [
@@ -48,7 +44,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('api/registro/', UserRegistrationView.as_view(), name='user_registration'),
+    path('api/registro/', core.views.UserRegistrationView.as_view(), name='user_registration'),
     path('api/', include(router.urls)),
 ]
 
