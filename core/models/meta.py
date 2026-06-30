@@ -3,6 +3,7 @@ from django.db import models
 
 
 class MetaDiaria(models.Model):
+
     usuario = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
@@ -26,6 +27,10 @@ class MetaDiaria(models.Model):
 
     xp = models.IntegerField(
         default=0
+    )
+
+    estudou = models.BooleanField(
+        default=False
     )
 
     def __str__(self):

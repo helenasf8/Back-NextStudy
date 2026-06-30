@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.utils import timezone
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -38,11 +40,35 @@ class DashboardView(APIView):
             data=timezone.now().date()
         ).first()
 
+        sequencia = 0
+
+        dia = timezone.now().date()
+
+        while True:
+
+            existe = MetaDiaria.objects.filter(
+                usuario=usuario,
+                data=dia,
+                estudou=True
+            ).exists()
+
+            if not existe:
+                break
+
+            sequencia += 1
+
+            dia -= timedelta(days=1)
+
         dados = {
 
             "usuario": usuario.username,
 
+
             "xp": meta.xp if meta else 0,
+
+
+            "sequencia": sequencia,
+
 
 
             "meta_diaria": {
@@ -54,6 +80,7 @@ class DashboardView(APIView):
                 "acertos": meta.acertos if meta else 0,
 
             },
+
 
 
             "estatisticas": {

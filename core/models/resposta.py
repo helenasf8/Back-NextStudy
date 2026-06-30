@@ -48,6 +48,8 @@ class RespostaExercicio(models.Model):
 
         meta.realizados += 1
 
+        meta.estudou = True
+
         if self.correta:
             meta.acertos += 1
             meta.xp += self.pontos
