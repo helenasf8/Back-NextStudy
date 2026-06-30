@@ -1,8 +1,6 @@
 from django.conf import settings
 from django.db import models
 
-from core.models import MetaDiaria
-
 
 class RespostaExercicio(models.Model):
 
@@ -40,6 +38,8 @@ class RespostaExercicio(models.Model):
         self.pontos = 10 if self.correta else 0
 
         super().save(*args, **kwargs)
+
+        from core.models import MetaDiaria  # noqa: PLC0415
 
         meta, created = MetaDiaria.objects.get_or_create(
             usuario=self.usuario,
