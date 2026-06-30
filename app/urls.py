@@ -25,6 +25,7 @@ router.register(r'materia', MateriaViewSet, basename='materia')
 router.register(r'exercicios', core.views.ExercicioViewSet, basename='exercicios')
 router.register(r'alternativas', core.views.AlternativaViewSet, basename='alternativas')
 router.register(r'respostas', core.views.RespostaExercicioViewSet, basename='respostas')
+router.register(r'metas', core.views.MetaDiariaViewSet, basename='metas')
 
 
 urlpatterns = [

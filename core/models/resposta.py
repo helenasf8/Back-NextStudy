@@ -1,8 +1,11 @@
 from django.conf import settings
 from django.db import models
 
+from core.models import MetaDiaria
+
 
 class RespostaExercicio(models.Model):
+
     usuario = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
@@ -26,13 +29,27 @@ class RespostaExercicio(models.Model):
         default=0
     )
 
-    created_at = models.DateTimeField(
+    data = models.DateTimeField(
         auto_now_add=True
     )
 
     def save(self, *args, **kwargs):
+
         self.correta = self.alternativa_escolhida.correta
 
         self.pontos = 10 if self.correta else 0
 
         super().save(*args, **kwargs)
+
+        meta, created = MetaDiaria.objects.get_or_create(
+            usuario=self.usuario,
+            data=self.data.date()
+        )
+
+        meta.realizados += 1
+
+        if self.correta:
+            meta.acertos += 1
+            meta.xp += self.pontos
+
+        meta.save()
