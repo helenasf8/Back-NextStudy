@@ -14,16 +14,26 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-import core.views
+from core.views import (
+    CronogramaItemViewSet,
+    CronogramaViewSet,
+    UserRegistrationView,
+    UserViewSet,
+)
+from core.views.dashboard import DashboardView
+from core.views.evolucao import EvolucaoView
 from core.views.materia import MateriaViewSet
+from core.views.meta import MetaDiariaViewSet
+from core.views.resposta import RespostaExercicioViewSet
 from uploader.router import router as uploader_router
+from uploader.views import AlternativaViewSet, ExercicioViewSet
 
 router = DefaultRouter()
 
-
+# Usuários
 router.register(
     r'usuarios',
-    core.views.UserViewSet,
+    UserViewSet,
     basename='usuarios'
 )
 
@@ -35,26 +45,40 @@ router.register(
 
 router.register(
     r'exercicios',
-    core.views.ExercicioViewSet,
+    ExercicioViewSet,
     basename='exercicios'
 )
 
 router.register(
     r'alternativas',
-    core.views.AlternativaViewSet,
+    AlternativaViewSet,
     basename='alternativas'
 )
 
 router.register(
     r'respostas',
-    core.views.RespostaExercicioViewSet,
+    RespostaExercicioViewSet,
     basename='respostas'
 )
 
 router.register(
     r'metas',
-    core.views.MetaDiariaViewSet,
+    MetaDiariaViewSet,
     basename='metas'
+)
+
+router.register(
+    r'cronograma',
+    CronogramaViewSet,
+    basename='cronograma'
+)
+
+
+# Itens do cronograma
+router.register(
+    r'cronograma-item',
+    CronogramaItemViewSet,
+    basename='cronograma-item'
 )
 
 
@@ -70,7 +94,6 @@ urlpatterns = [
         'api/media/',
         include(uploader_router.urls)
     ),
-
 
     path(
         'api/schema/',
@@ -120,7 +143,7 @@ urlpatterns = [
 
     path(
         'api/registro/',
-        core.views.UserRegistrationView.as_view(),
+        UserRegistrationView.as_view(),
         name='user_registration'
     ),
 
@@ -129,7 +152,7 @@ urlpatterns = [
 
     path(
         'api/dashboard/',
-        core.views.DashboardView.as_view(),
+        DashboardView.as_view(),
         name='dashboard'
     ),
 
@@ -138,7 +161,7 @@ urlpatterns = [
 
     path(
         'api/evolucao/',
-        core.views.EvolucaoView.as_view(),
+        EvolucaoView.as_view(),
         name='evolucao'
     ),
 

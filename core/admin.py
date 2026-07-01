@@ -8,6 +8,8 @@ from django.utils.translation import gettext_lazy as _  # pyright: ignore[report
 
 from core.models import (
     Alternativa,
+    Cronograma,
+    CronogramaItem,
     Exercicio,
     Materia,
     User,
@@ -82,12 +84,8 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
-
-
 admin.site.register(Materia)
-
-
 admin.site.register(Exercicio)
-
-
 admin.site.register(Alternativa)
+admin.site.register(Cronograma)
+admin.site.register(CronogramaItem)
