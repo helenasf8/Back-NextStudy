@@ -8,3 +8,4 @@ from .dashboard import DashboardView
 from .evolucao import EvolucaoView
 from .cronograma import CronogramaViewSet
 from .cronogramaItem import CronogramaItemViewSet
+from .kanban import KanbanTarefaViewSet

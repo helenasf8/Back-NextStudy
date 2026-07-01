@@ -7,3 +7,4 @@ from .dashboard import DashboardSerializer
 from .evolucao import EvolucaoSerializer
 from .cronograma import CronogramaSerializer
 from .cronogramaItem import CronogramaItemSerializer
+from .kanban import KanbanTarefaSerializer
