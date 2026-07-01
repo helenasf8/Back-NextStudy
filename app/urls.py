@@ -1,38 +1,34 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
-
-from django.conf import settings
-from django.conf.urls.static import static
-
-from uploader.router import router as uploader_router
-
 from rest_framework.routers import DefaultRouter
-
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
     TokenVerifyView,
 )
 
-
 from core.views import (
+    CronogramaItemViewSet,
+    CronogramaViewSet,
     UserRegistrationView,
     UserViewSet,
-    CronogramaViewSet,
-    CronogramaItemViewSet,
 )
-
+from core.views.dashboard import DashboardView
+from core.views.evolucao import EvolucaoView
 from core.views.materia import MateriaViewSet
-
+from core.views.meta import MetaDiariaViewSet
+from core.views.resposta import RespostaExercicioViewSet
+from uploader.router import router as uploader_router
+from uploader.views import AlternativaViewSet, ExercicioViewSet
 
 router = DefaultRouter()
-
 
 # Usuários
 router.register(
@@ -41,16 +37,36 @@ router.register(
     basename='usuarios'
 )
 
-
-# Matérias
 router.register(
     r'materia',
     MateriaViewSet,
     basename='materia'
 )
 
+router.register(
+    r'exercicios',
+    ExercicioViewSet,
+    basename='exercicios'
+)
 
-# Cronogramas
+router.register(
+    r'alternativas',
+    AlternativaViewSet,
+    basename='alternativas'
+)
+
+router.register(
+    r'respostas',
+    RespostaExercicioViewSet,
+    basename='respostas'
+)
+
+router.register(
+    r'metas',
+    MetaDiariaViewSet,
+    basename='metas'
+)
+
 router.register(
     r'cronograma',
     CronogramaViewSet,
@@ -66,7 +82,6 @@ router.register(
 )
 
 
-
 urlpatterns = [
 
     path(
@@ -75,50 +90,47 @@ urlpatterns = [
     ),
 
 
-    # Upload de imagens
     path(
         'api/media/',
         include(uploader_router.urls)
     ),
 
-
-    # Documentação API
     path(
         'api/schema/',
         SpectacularAPIView.as_view(),
-        name='schema',
+        name='schema'
     ),
+
 
     path(
         'api/doc/',
-        SpectacularSwaggerView.as_view(
-            url_name='schema'
-        ),
-        name='swagger-ui',
+        SpectacularSwaggerView.as_view(url_name='schema'),
+        name='swagger-ui'
     ),
+
 
     path(
         'api/redoc/',
-        SpectacularRedocView.as_view(
-            url_name='schema'
-        ),
-        name='redoc',
+        SpectacularRedocView.as_view(url_name='schema'),
+        name='redoc'
     ),
 
 
-
     # JWT
+
     path(
         'api/token/',
         TokenObtainPairView.as_view(),
         name='token_obtain_pair'
     ),
 
+
     path(
         'api/token/refresh/',
         TokenRefreshView.as_view(),
         name='token_refresh'
     ),
+
 
     path(
         'api/token/verify/',
@@ -127,8 +139,8 @@ urlpatterns = [
     ),
 
 
-
     # Registro
+
     path(
         'api/registro/',
         UserRegistrationView.as_view(),
@@ -136,13 +148,30 @@ urlpatterns = [
     ),
 
 
+    # Dashboard
 
-    # Rotas da API
+    path(
+        'api/dashboard/',
+        DashboardView.as_view(),
+        name='dashboard'
+    ),
+
+
+    # Evolução
+
+    path(
+        'api/evolucao/',
+        EvolucaoView.as_view(),
+        name='evolucao'
+    ),
+
+
+    # API principal
+
     path(
         'api/',
         include(router.urls)
     ),
-
 ]
 
 

@@ -2,23 +2,41 @@
 Django admin customization.
 """
 
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.utils.translation import gettext_lazy as _
+from django.contrib import admin  # type: ignore
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin  # type: ignore
+from django.utils.translation import gettext_lazy as _  # pyright: ignore[reportMissingModuleSource]
 
-from core import models
-from core.models import Cronograma, CronogramaItem
-from core.models.materia import Materia
+from core.models import (
+    Alternativa,
+    Cronograma,
+    CronogramaItem,
+    Exercicio,
+    Materia,
+    User,
+)
 
 
 class UserAdmin(BaseUserAdmin):
     """Define the admin pages for users."""
 
     ordering = ['id']
-    list_display = ['email', 'name']
+
+    list_display = [
+        'email',
+        'name',
+    ]
+
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal Info'), {'fields': ('name', 'foto')}),
+        (
+            _('Personal Info'),
+            {
+                'fields': (
+                    'name',
+                    'foto',
+                )
+            },
+        ),
         (
             _('Permissions'),
             {
@@ -29,11 +47,22 @@ class UserAdmin(BaseUserAdmin):
                 )
             },
         ),
-        (_('Important dates'), {'fields': ('last_login',)}),
-        (_('Groups'), {'fields': ('groups',)}),
-        (_('User Permissions'), {'fields': ('user_permissions',)}),
+        (
+            _('Important dates'),
+            {'fields': ('last_login',)},
+        ),
+        (
+            _('Groups'),
+            {'fields': ('groups',)},
+        ),
+        (
+            _('User Permissions'),
+            {'fields': ('user_permissions',)},
+        ),
     )
+
     readonly_fields = ['last_login']
+
     add_fieldsets = (
         (
             None,
@@ -54,7 +83,9 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
-admin.site.register(models.User, UserAdmin)
+admin.site.register(User, UserAdmin)
 admin.site.register(Materia)
+admin.site.register(Exercicio)
+admin.site.register(Alternativa)
 admin.site.register(Cronograma)
 admin.site.register(CronogramaItem)
