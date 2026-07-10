@@ -34,7 +34,7 @@ class UserSerializer(ModelSerializer):
 
 
 class UserRegistrationSerializer(ModelSerializer):
-    password = CharField(write_only=True, min_length=8)
+    password = CharField(write_only=True)
 
     class Meta:
         model = User
