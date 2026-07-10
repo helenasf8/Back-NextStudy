@@ -1,6 +1,5 @@
 from rest_framework.serializers import CharField, ModelSerializer, SlugRelatedField
-
-from core.models import User
+from core.models import User, Cronograma
 from uploader.models import Image
 from uploader.serializers import ImageSerializer
 
@@ -13,7 +12,6 @@ class UserSerializer(ModelSerializer):
         required=False,
         write_only=True,
     )
-
     foto = ImageSerializer(required=False, read_only=True)
 
     class Meta:
@@ -41,4 +39,6 @@ class UserRegistrationSerializer(ModelSerializer):
         fields = ['id', 'email', 'name', 'password']
 
     def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+        user = User.objects.create_user(**validated_data)
+        Cronograma.objects.create(usuario=user, nome='Meu Cronograma')
+        return user
