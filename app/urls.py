@@ -22,6 +22,7 @@ from core.views import (
 )
 from core.views.dashboard import DashboardView
 from core.views.evolucao import EvolucaoView
+from core.views.kanban import KanbanTarefaViewSet
 from core.views.materia import MateriaViewSet
 from core.views.meta import MetaDiariaViewSet
 from core.views.resposta import RespostaExercicioViewSet
@@ -79,6 +80,12 @@ router.register(
     r'cronograma-item',
     CronogramaItemViewSet,
     basename='cronograma-item'
+)
+
+router.register(
+    r'kanban',
+    KanbanTarefaViewSet,
+    basename='kanban'
 )
 
 
