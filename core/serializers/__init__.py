@@ -7,3 +7,6 @@ from .dashboard import DashboardSerializer
 from .evolucao import EvolucaoSerializer
 from .cronograma import CronogramaSerializer
 from .cronogramaItem import CronogramaItemSerializer
+from .conquista import ConquistaSerializer
+from .usuarioConquista import UsuarioConquistaSerializer
+from .kanban import KanbanTarefaSerializer

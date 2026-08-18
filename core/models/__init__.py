@@ -6,4 +6,6 @@ from .resposta import RespostaExercicio
 from .meta import MetaDiaria
 from .cronograma import Cronograma
 from .cronogramaItem import CronogramaItem
-
+from .conquista import Conquista
+from .usuarioConquista import UsuarioConquista
+from .kanban import KanbanTarefa
