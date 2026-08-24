@@ -54,6 +54,44 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=None,
     )
 
+    bio = models.TextField(blank=True, default='')
+
+    OBJETIVO_CHOICES = [
+        ('MELHORAR_NOTAS', 'Melhorar notas'),
+        ('VESTIBULAR', 'Passar em vestibular'),
+        ('APRENDER', 'Aprender algo novo'),
+        ('CONSTANCIA', 'Manter constância'),
+    ]
+    objetivo = models.CharField(max_length=20, choices=OBJETIVO_CHOICES, blank=True, default='')
+
+    materia_favorita = models.ForeignKey(
+        'core.Materia',
+        related_name='usuarios_favoritos',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+
+    HORARIO_CHOICES = [
+        ('MANHA', 'Manhã'),
+        ('TARDE', 'Tarde'),
+        ('NOITE', 'Noite'),
+        ('MADRUGADA', 'Madrugada'),
+    ]
+    melhor_horario = models.CharField(max_length=15, choices=HORARIO_CHOICES, blank=True, default='')
+
+    meta_diaria_minutos = models.PositiveIntegerField(default=60)
+
+    TEMA_CHOICES = [
+        ('AZUL', 'Azul'),
+        ('ROXO', 'Roxo'),
+        ('VERDE', 'Verde'),
+        ('LARANJA', 'Laranja'),
+        ('ROSA', 'Rosa'),
+        ('CIANO', 'Ciano'),
+    ]
+    tema_cor = models.CharField(max_length=10, choices=TEMA_CHOICES, default='AZUL')
+
     is_active = models.BooleanField(
         default=True, verbose_name=_('Usuário está ativo'), help_text=_('Indica que este usuário está ativo.')
     )
