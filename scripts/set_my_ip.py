@@ -20,9 +20,7 @@ def get_current_ip():
 # Função para atualizar o arquivo .env com o novo IP
 def update_env_file(ip):
     try:
-        # Verifica se o arquivo .env existe
         if not os.path.isfile('.env'):
-            # Cria o arquivo .env se ele não existir
             with open('.env', 'w', encoding='utf-8') as new_file:
                 new_file.write(f'MY_IP={ip}\n')
         else:
@@ -33,8 +31,10 @@ def update_env_file(ip):
                 for line in lines:
                     if line.startswith('MY_IP='):
                         continue
-                    else:
-                        file.write(line)
+                    # garante que a linha termine com \n, mesmo se o arquivo
+                    # original não tinha quebra de linha no final
+                    line = line.rstrip('\n') + '\n'
+                    file.write(line)
                 file.write(f'MY_IP={ip}\n')
 
         print(f'IP atualizado no arquivo .env: MY_IP={ip}')
