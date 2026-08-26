@@ -6,14 +6,7 @@ from django.contrib import admin  # type: ignore
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin  # type: ignore
 from django.utils.translation import gettext_lazy as _  # pyright: ignore[reportMissingModuleSource]
 
-from core.models import (
-    Alternativa,
-    Cronograma,
-    CronogramaItem,
-    Exercicio,
-    Materia,
-    User,
-)
+from core.models import Alternativa, Cronograma, CronogramaItem, Exercicio, Materia, MetaDiaria, User
 
 
 class UserAdmin(BaseUserAdmin):
@@ -89,3 +82,4 @@ admin.site.register(Exercicio)
 admin.site.register(Alternativa)
 admin.site.register(Cronograma)
 admin.site.register(CronogramaItem)
+admin.site.register(MetaDiaria)

@@ -1,5 +1,6 @@
 from rest_framework.serializers import CharField, ModelSerializer, SlugRelatedField
-from core.models import User, Cronograma
+
+from core.models import Cronograma, User
 from uploader.models import Image
 from uploader.serializers import ImageSerializer
 
@@ -27,6 +28,8 @@ class UserSerializer(ModelSerializer):
             'is_superuser',
             'last_login',
             'groups',
+            'bio',
+            'tema_cor',
         )
         depth = 1
 
