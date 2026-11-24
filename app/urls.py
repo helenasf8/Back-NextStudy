@@ -20,6 +20,7 @@ from core.views import (
     UserRegistrationView,
     UserViewSet,
 )
+
 from core.views.dashboard import DashboardView
 from core.views.evolucao import EvolucaoView
 from core.views.kanban import KanbanTarefaViewSet
@@ -28,6 +29,13 @@ from core.views.meta import MetaDiariaViewSet
 from core.views.resposta import RespostaExercicioViewSet
 from uploader.router import router as uploader_router
 from uploader.views import AlternativaViewSet, ExercicioViewSet
+
+from core.views.questaoDiaria import (
+    QuestaoDiariaView,
+    ResponderQuestaoDiariaView
+)
+
+from core.views.chat import ChatView
 
 router = DefaultRouter()
 
@@ -172,6 +180,23 @@ urlpatterns = [
         name='evolucao'
     ),
 
+        path(
+        'api/metas/diarias/',
+        QuestaoDiariaView.as_view(),
+        name='questoes-diarias'
+    ),
+
+    path(
+        'api/metas/diarias/<int:pk>/responder/',
+        ResponderQuestaoDiariaView.as_view(),
+        name='responder-questao-diaria'
+    ),
+
+    path(
+        'api/chat/',
+        ChatView.as_view(),
+        name='chat'
+    ),
 
     # API principal
 
@@ -182,7 +207,8 @@ urlpatterns = [
 ]
 
 
-urlpatterns += static(
-    settings.MEDIA_ENDPOINT,
-    document_root=settings.MEDIA_ROOT
-)
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_ENDPOINT,
+        document_root=settings.MEDIA_ROOT
+    )
