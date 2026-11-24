@@ -1,12 +1,13 @@
+
 from django.conf import settings
-from ollama import Client
+from groq import Groq
 
 
 def conversar_com_ia(mensagens):
 
-    client = Client(
-        host=settings.OLLAMA_URL,
-        timeout=300.0
+    client = Groq(
+        api_key=settings.GROQ_API_KEY,
+        timeout=60.0
     )
 
     system_message = {
@@ -22,27 +23,23 @@ def conversar_com_ia(mensagens):
         )
     }
 
-    response = client.chat(
-        model=settings.OLLAMA_MODEL,
+    response = client.chat.completions.create(
+        model=settings.GROQ_MODEL,
 
         messages=[
             system_message,
             *mensagens
         ],
 
-        options={
-            'temperature': 0.5,
-            'num_gpu': 0,
-            'num_ctx': 4096,
-            'num_predict': 512
-        },
-
-        keep_alive='10m'
+        temperature=0.5,
+        max_completion_tokens=2048
     )
 
-    resposta = response.message.content
+    resposta = response.choices[0].message.content
 
     if not resposta:
-        raise ValueError('A IA não retornou uma resposta.')
+        raise ValueError(
+            'A IA não retornou uma resposta.'
+        )
 
     return resposta

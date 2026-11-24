@@ -25,6 +25,8 @@ dependencies = [
   'setuptools>=68.2.2',
   'uvicorn>=0.29.0',
   'whitenoise[brotli]>=6.6.0',
+  "pydantic>=2",
+  "groq>=1.7.0",
 ]
 requires-python = ">=3.10"
 license = { text = "MIT" }
@@ -38,7 +40,7 @@ dev = [
 
 [tool.pdm.scripts]
 pre_dev = "python ./scripts/set_my_ip.py"
-dev = "python manage.py runserver 127.0.0.1:8000"
+dev = "python manage.py runserver 0.0.0.0:8001"
 createsuperuser = "python manage.py createsuperuser"
 pre_migrate = "python manage.py makemigrations"
 migrate = "python manage.py migrate"

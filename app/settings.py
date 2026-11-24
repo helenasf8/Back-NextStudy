@@ -16,14 +16,11 @@ MODE = os.getenv('MODE')
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
-OLLAMA_URL = os.getenv(
-    'OLLAMA_URL',
-    'http://127.0.0.1:11434'
-)
+GROQ_API_KEY = os.getenv('GROQ_API_KEY', '')
 
-OLLAMA_MODEL = os.getenv(
-    'OLLAMA_MODEL',
-    'qwen2.5:1.5b'
+GROQ_MODEL = os.getenv(
+    'GROQ_MODEL',
+    'openai/gpt-oss-20b'
 )
 
 # Segurança e configuração básica

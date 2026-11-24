@@ -22,7 +22,7 @@ from core.serializers.questaoDiaria import (
     QuestaoDiariaSerializer
 )
 
-from core.services.ollama_service import gerar_questao
+from core.services.groq_service import gerar_questao
 
 
 logger = logging.getLogger(__name__)
