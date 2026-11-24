@@ -7,37 +7,58 @@ from rest_framework.viewsets import ModelViewSet
 from drf_spectacular.utils import extend_schema
 
 from core.models import User
-from core.serializers import UserRegistrationSerializer, UserSerializer
+from core.serializers import (
+    UserRegistrationSerializer,
+    UserSerializer
+)
 
 
 class UserViewSet(ModelViewSet):
-    queryset = User.objects.all().order_by('id')
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return User.objects.filter(
+            id=self.request.user.id
+        )
 
     @extend_schema(
         summary="Dados do usuário autenticado",
         description="Retorna ou atualiza os dados do usuário autenticado.",
         responses={200: UserSerializer, 401: None},
     )
-    @action(detail=False, methods=['get', 'patch'], permission_classes=[IsAuthenticated])
+    @action(
+        detail=False,
+        methods=['get', 'patch'],
+        permission_classes=[IsAuthenticated]
+    )
     def me(self, request):
-        """Retorna ou atualiza os dados do usuário autenticado."""
         user = request.user
 
         if request.method == 'GET':
-            serializer = UserSerializer(user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            serializer = self.get_serializer(user)
 
-        # PATCH
-        serializer = UserSerializer(user, data=request.data, partial=True)
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
+
+        serializer = self.get_serializer(
+            user,
+            data=request.data,
+            partial=True
+        )
+
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
 
 
 class UserRegistrationView(CreateAPIView):
-    """Endpoint para registro de novos usuários."""
     queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
     permission_classes = [AllowAny]

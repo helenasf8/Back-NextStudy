@@ -1,5 +1,6 @@
 import os
 from datetime import timedelta
+from dotenv import load_dotenv
 from pathlib import Path
 
 import dj_database_url
@@ -13,10 +14,21 @@ MODE = os.getenv('MODE')
 
 # Constrói o caminho base do projeto, usado para definir caminhos relativos
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env')
+
+OLLAMA_URL = os.getenv(
+    'OLLAMA_URL',
+    'http://127.0.0.1:11434'
+)
+
+OLLAMA_MODEL = os.getenv(
+    'OLLAMA_MODEL',
+    'qwen2.5:1.5b'
+)
 
 # Segurança e configuração básica
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure')
-DEBUG = os.getenv('DEBUG', 'False')
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
@@ -44,10 +56,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -109,15 +121,12 @@ USE_TZ = True
 # Configurações de arquivos estáticos
 STATIC_URL = 'static/'
 
-# Configurações de arquivos de mídia (App Uploader)
 MEDIA_ENDPOINT = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 FILE_UPLOAD_PERMISSIONS = 0o640
 
-# Configurações específicas para desenvolvimento, migração e produção
 if MODE == 'DEVELOPMENT':
-    MY_IP = os.getenv('MY_IP', '127.0.0.1')
-    MEDIA_URL = f'http://{MY_IP}:19003/media/'
+    MEDIA_URL = 'http://localhost:8001/media/'
 else:
     MEDIA_URL = '/media/'
     CLOUDINARY_URL = os.getenv('CLOUDINARY_URL')

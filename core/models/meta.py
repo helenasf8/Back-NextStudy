@@ -33,5 +33,13 @@ class MetaDiaria(models.Model):
         default=False
     )
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['usuario', 'data'],
+                name='uma_meta_por_usuario_por_dia'
+            )
+        ]
+
     def __str__(self):
         return f'{self.usuario} - {self.data}'

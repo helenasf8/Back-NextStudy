@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 
 class RespostaExercicio(models.Model):
@@ -43,7 +44,7 @@ class RespostaExercicio(models.Model):
 
         meta, created = MetaDiaria.objects.get_or_create(
             usuario=self.usuario,
-            data=self.data.date()
+            data=timezone.localdate(self.data)
         )
 
         meta.realizados += 1

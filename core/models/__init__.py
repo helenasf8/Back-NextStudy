@@ -7,3 +7,4 @@ from .meta import MetaDiaria
 from .cronograma import Cronograma
 from .cronogramaItem import CronogramaItem
 from .kanban import KanbanTarefa
+from .questaoDiaria import QuestaoDiaria
